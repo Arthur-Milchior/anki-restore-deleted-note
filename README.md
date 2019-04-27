@@ -77,6 +77,10 @@ of note type which already exists. You'll have the data in anki, even
 if it is in bad place. You'll have then to manually decide what to do
 with those cards.
 
+### Medias
+Sorry, but deleted media are not saved anywhere. So if your card add
+media, it won't be back.
+
 ## Technical details
 A line is supposed to encode a note type if it starts by two numbers
 with at least 6 digits, each numbere followed by a tab. Otherwise, it
@@ -96,4 +100,4 @@ Copyright   | Arthur Milchior <arthur@milchior.fr>
 Based on    | Anki code by Damien Elmes <anki@ichi2.net>
 License     | GNU AGPL, version 3 or later; http://www.gnu.org/licenses/agpl.html
 Source in   | https://github.com/Arthur-Milchior/anki-restore-deleted-note
-Addon number| [???????](https://ankiweb.net/shared/info/???????)
+Addon number| [912930620](https://ankiweb.net/shared/info/912930620)
