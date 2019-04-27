@@ -21,6 +21,8 @@ last recourse add-on.
 To find the notes created by this add-on easily, it adds the tag
 ```NoteBackFromDeleted``` to cards imported.
 
+The creation date of notes is kept (but not the creation date of card)
+
 ## Usage
 First, use the add-on manager to edit the configuration of this
 add-on. In front of "file", put the adress of the file you want to
@@ -65,6 +67,9 @@ you did cancel the deletion, or you imported the note again from
 somewhere. Anyway, if a note from your file has the same id than a
 card in your collection, then this card is not added, and an error
 message is written.
+
+This mean in particular that if you import twice the same file, you'll
+still have a single copy.
 
 ### Missing note type
 If you have deleted the note type, the note can't be
