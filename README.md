@@ -19,7 +19,7 @@ whether you have the missing note in some backup somewhere. This is a
 last recourse add-on.
 
 To find the notes created by this add-on easily, it adds the tag
-```NoteBackFromDeleted``` to cards imported.
+`NoteBackFromDeleted` to cards imported.
 
 The creation date of notes is kept (but not the creation date of card)
 
