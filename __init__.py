@@ -26,7 +26,7 @@ def addBackNote(line, wrongMids, presentNids):
     nbFieldModel = len(model["flds"])
     if nbFieldModel < nbFieldEntry:
         end = fields[nbFieldModel-1:]
-        last_field = ":::".join(end)
+        last_field = "EXTRAFIELD".join(end)
         fields = fields[:nbFieldModel-1]
         fields.append(last_field)
     elif nbFieldModel > nbFieldEntry:
