@@ -55,7 +55,7 @@ def addBack():
     presentNids = set()
     firstLine = True
     deletedPath = os.path.join(mw.col.path.replace("collection.anki2", ""), getUserOption("file","r"))
-    with open(deletedPath) as f:
+    with open(deletedPath, encoding = "UTF-8") as f:
         for line in f:
             if testLine(line):
                 lines.append(line)
