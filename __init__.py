@@ -5,6 +5,7 @@ from anki.notes import Note
 from anki.hooks import addHook
 import re
 from .config import getUserOption
+import os
 
 def addBackNote(line, wrongMids, presentNids):
     elements=line.split("\t")
@@ -53,7 +54,8 @@ def addBack():
     wrongMids = set()
     presentNids = set()
     firstLine = True
-    with open(getUserOption("file","r")) as f:
+    deletedPath = os.path.join(mw.col.path.replace("collection.anki2", ""), getUserOption("file","r"))
+    with open(deletedPath) as f:
         for line in f:
             if testLine(line):
                 lines.append(line)
