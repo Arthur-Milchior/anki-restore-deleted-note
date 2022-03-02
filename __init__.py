@@ -45,24 +45,19 @@ def addBackNote(line, wrongMids, presentNids):
         return "no card"
     return True
 
-def testLine(line):
-      return re.search(r"^\d{6,}\t\d{6,}\t", line) is not None
+def isNoteLine(line):
+    return re.search(r"^\d{6,}\t\d{6,}\t", line) is not None and not line == "nid\tmid\tfields"
 
 def addBack():
     lines = []
     message = []
     wrongMids = set()
     presentNids = set()
-    firstLine = True
     deletedPath = os.path.join(mw.col.path.replace("collection.anki2", ""), getUserOption("file","r"))
     with open(deletedPath, encoding = "UTF-8") as f:
         for line in f:
-            if testLine(line):
+            if isNoteLine(line):
                 lines.append(line)
-            else:
-                if not (firstLine and line == "nid\tmid\tfields"):
-                    lines[-1]+="\n"+line
-            firstLine = False
     print(f"We must consider {len(lines)} lines")
     cnt = 1
     imp = 0
