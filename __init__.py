@@ -10,9 +10,9 @@ import os
 def addBackNote(line, wrongMids, presentNids):
     elements=line.split("\t")
     #print(f"Considering line «{elements}»")
-    nid = elements[0]
+    nid = int(elements[0])
     #print(f"nid is {nid}")
-    mid = elements[1]
+    mid = int(elements[1])
     if mw.col.db.list("""select id from notes where id = ?""", nid):
         print(f"Note {nid} was already present")
         presentNids.add(nid)
