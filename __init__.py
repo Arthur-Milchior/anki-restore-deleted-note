@@ -5,13 +5,14 @@ from anki.notes import Note
 from anki.hooks import addHook
 import re
 from .config import getUserOption
+import os
 
 def addBackNote(line, wrongMids, presentNids):
     elements=line.split("\t")
     #print(f"Considering line «{elements}»")
-    nid = elements[0]
+    nid = int(elements[0])
     #print(f"nid is {nid}")
-    mid = elements[1]
+    mid = int(elements[1])
     if mw.col.db.list("""select id from notes where id = ?""", nid):
         print(f"Note {nid} was already present")
         presentNids.add(nid)
@@ -32,7 +33,6 @@ def addBackNote(line, wrongMids, presentNids):
     elif nbFieldModel > nbFieldEntry:
         fields += [""]*(nbFieldModel - nbFieldEntry)
     note = Note(mw.col, model)
-    note.id = nid
     note.fields = fields
     note.addTag("NoteBackFromDeleted")
     nbCard = mw.col.addNote(note)
@@ -42,25 +42,25 @@ def addBackNote(line, wrongMids, presentNids):
         template0 = model["tmpls"][0]
         mw.col._newCard(note,template0,mw.col.nextID("pos"))
         return "no card"
+    else:
+        # Restore original note id
+        mw.col.db.execute("update Cards set nid = ? where nid = ?", nid, note.id)
+        mw.col.db.execute("update Notes set id = ? where id = ?", nid, note.id)
     return True
 
-def testLine(line):
-      return re.search(r"^\d{6,}\t\d{6,}\t", line) is not None
+def isNoteLine(line):
+    return re.search(r"^\d{6,}\t\d{6,}\t", line) is not None and not line == "nid\tmid\tfields"
 
 def addBack():
     lines = []
     message = []
     wrongMids = set()
     presentNids = set()
-    firstLine = True
-    with open(getUserOption("file","r")) as f:
+    deletedPath = os.path.join(mw.col.path.replace("collection.anki2", ""), getUserOption("file","r"))
+    with open(deletedPath, encoding = "UTF-8") as f:
         for line in f:
-            if testLine(line):
+            if isNoteLine(line):
                 lines.append(line)
-            else:
-                if not (firstLine and line == "nid\tmid\tfields"):
-                    lines[-1]+="\n"+line
-            firstLine = False
     print(f"We must consider {len(lines)} lines")
     cnt = 1
     imp = 0
