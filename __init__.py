@@ -33,7 +33,6 @@ def addBackNote(line, wrongMids, presentNids):
     elif nbFieldModel > nbFieldEntry:
         fields += [""]*(nbFieldModel - nbFieldEntry)
     note = Note(mw.col, model)
-    note.id = nid
     note.fields = fields
     note.addTag("NoteBackFromDeleted")
     nbCard = mw.col.addNote(note)
@@ -43,6 +42,10 @@ def addBackNote(line, wrongMids, presentNids):
         template0 = model["tmpls"][0]
         mw.col._newCard(note,template0,mw.col.nextID("pos"))
         return "no card"
+    else:
+        # Restore original note id
+        mw.col.db.execute("update Cards set nid = ? where nid = ?", nid, note.id)
+        mw.col.db.execute("update Notes set id = ? where id = ?", nid, note.id)
     return True
 
 def isNoteLine(line):
